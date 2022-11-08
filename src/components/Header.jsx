@@ -18,16 +18,10 @@ const HeaderEl = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
   background-color: ${BACKGROUND.color.goldenrod};
   width: 100%;
   z-index: 10;
   transition: top 0.2s linear;
-  &.up {
-    top: -5rem;
-  }
   @media screen and (${MEDIA.mobile}) {
     width: 100vw;
   }
@@ -90,33 +84,10 @@ const SideMenu = styled.li`
 `;
 
 function Header() {
-  const [headClassOnScroll, setheadClassOnScroll] = useState("down");
-  let lastScrollTop = 0;
-
-  const handleNavigation = useCallback(
-    (e) => {
-      let st = window.pageYOffset || document.documentElement.scrollTop;
-      if (st > lastScrollTop) {
-        setheadClassOnScroll("up");
-      } else {
-        setheadClassOnScroll("down");
-      }
-      lastScrollTop = st <= 0 ? 0 : st;
-    },
-    [window]
-  );
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleNavigation);
-
-    return () => {
-      window.removeEventListener("scroll", handleNavigation);
-    };
-  }, [handleNavigation]);
 
   return (
     <>
-      <HeaderEl className={headClassOnScroll}>
+      <HeaderEl>
         <Content>
           <NavWrapper>
             <SubMedia>

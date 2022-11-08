@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { IMAGE, FONT } from "constants/styles/StyleParams";
+import { Link } from "react-router-dom";
 
 const CardCateg = styled.div`
   margin: 0.625rem;
@@ -22,11 +23,13 @@ const CardContent = styled.div`
   font-family: ${FONT.family.main};
 `;
 
-const CardTitle = styled.span`
+const CardTitle = styled(Link)`
   font-size: 1.25rem;
   font-weight: bold;
   padding-left: 0.625rem;
   text-transform: capitalize;
+  text-decoration: none;
+  color: black;
 
   &:hover {
     color: ${FONT.color.yellow};
@@ -94,7 +97,9 @@ function Card({ pokemon }) {
       <CardWrapper>
         <CardContent>
           <TitleWrapper>
-            <CardTitle>{pokemon ? pokemon.name : "Name"}</CardTitle>
+            <CardTitle to={`details/${pokemon.id}`} >
+              {pokemon?.name ?? "Name"}
+            </CardTitle>
           </TitleWrapper>
 
           <ImageWrapper>
@@ -104,14 +109,15 @@ function Card({ pokemon }) {
           <InfoWrapper>
             <InfoSectionWrapperFloat floatSide={"right"}>
               <CardText>
-                <b>Base XP:</b> {pokemon?.base_experience ? pokemon.base_experience : "000"}
+                <b>Base XP:</b>{" "}
+                {pokemon?.base_experience ?? "000"}
               </CardText>
             </InfoSectionWrapperFloat>
 
             <InfoSectionWrapperFloat floatSide={"left"}>
               <CardText>
-                <b>H:</b> {pokemon ? pokemon.height : "00"} <b>W:</b>{" "}
-                {pokemon ? pokemon.weight : "00"}
+                <b>H:</b> {pokemon?.height ?? "00"} <b>W:</b>{" "}
+                {pokemon?.weight ?? "00"}
               </CardText>
             </InfoSectionWrapperFloat>
 
@@ -120,21 +126,17 @@ function Card({ pokemon }) {
             {pokemon &&
               pokemon?.abilities?.map((ability, idx) => {
                 return (
-                  <>
-                    <InfoSectionWrapperClear
-                      key={ability.pokemon_v2_ability.id}
+                  <InfoSectionWrapperClear key={ability.pokemon_v2_ability.id}>
+                    <CardText
+                      style={{
+                        marginTop: "0.188rem",
+                        marginBottom: "0.188rem",
+                        textTransform: "capitalize",
+                      }}
                     >
-                      <CardText
-                        style={{
-                          marginTop: "0.188rem",
-                          marginBottom: "0.188rem",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        {ability.pokemon_v2_ability.name}
-                      </CardText>
-                    </InfoSectionWrapperClear>
-                  </>
+                      {ability.pokemon_v2_ability.name}
+                    </CardText>
+                  </InfoSectionWrapperClear>
                 );
               })}
           </InfoWrapper>

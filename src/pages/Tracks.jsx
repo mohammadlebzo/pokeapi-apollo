@@ -117,7 +117,7 @@ function Tracks() {
     refetch();
   }, [searchName, filter, page]);
 
-  if (error) return `Error! ${error.message}`;
+  if (error) return <p>{`Error! ${error.message}`}</p>;
 
   return (
     <>
@@ -146,4 +146,5 @@ function Tracks() {
   );
 }
 
+export { DEFULT_TRACK };
 export default Tracks;

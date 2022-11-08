@@ -2,13 +2,13 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { BACKGROUND } from "constants/styles/StyleParams";
 
+import { useRef } from "react";
+
 const Wrapper = styled.div`
   display: flex;
   margin-top: 10rem;
   box-sizing: border-box;
   justify-content: center;
-
-  
 `;
 
 const Form = styled.form`
@@ -54,11 +54,13 @@ const SearchItem = styled.span`
 `;
 
 function SearchBar({ setSearchName, setPage }) {
+  const inputRef = useRef();
+
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (e.target.searchInput.value) {
-      setSearchName({ _ilike: e.target.searchInput.value });
+    if (inputRef.current.value) {
+      setSearchName({ _ilike: inputRef.current.value });
       setPage(0);
     } else {
       setSearchName({});
@@ -70,6 +72,7 @@ function SearchBar({ setSearchName, setPage }) {
     <Wrapper>
       <Form onSubmit={submitHandler}>
         <input
+          ref={inputRef}
           name="searchInput"
           type="text"
           placeholder="Search.."
@@ -82,9 +85,7 @@ function SearchBar({ setSearchName, setPage }) {
           }}
         />
         <button type="submit">
-          <a href="">
-            <SearchItem></SearchItem>
-          </a>
+          <SearchItem></SearchItem>
         </button>
       </Form>
     </Wrapper>
