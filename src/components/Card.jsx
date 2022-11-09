@@ -122,7 +122,7 @@ function Card({ pokemon }) {
             <InnerInfoTitle>Abilities:</InnerInfoTitle>
 
             {pokemon &&
-              pokemon?.abilities?.map((ability, idx) => {
+              pokemon?.abilities?.map((ability) => {
                 return (
                   <InfoSectionWrapperClear key={ability.pokemon_v2_ability.id}>
                     <CardText

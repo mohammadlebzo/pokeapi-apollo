@@ -80,14 +80,14 @@ function Header() {
           <NavWrapper>
             <SubMedia>
               <LogoWrapper href="/">
-                <img src={IMAGE.logo} alt="" width={200} height={70} />
+                <img src={IMAGE.logo} alt="Pokemone Logo" width={200} height={70} />
               </LogoWrapper>
             </SubMedia>
 
             <SubMediaMobile>
               <LogoMobile>
                 <a href="/">
-                  <img src={IMAGE.logo} alt="" width={130} height={50} />
+                  <img src={IMAGE.logo} alt="Pokemone Logo" width={130} height={50} />
                 </a>
               </LogoMobile>
             </SubMediaMobile>
