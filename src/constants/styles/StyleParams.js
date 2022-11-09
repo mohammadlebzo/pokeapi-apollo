@@ -5,14 +5,6 @@ const FONT = {
   color: {
     white: "#fff",
     black: "#000",
-    darkBlue: "#0d253f",
-    lightBlue: "#01b4e4",
-    lightGreen: "#21d07a",
-    darkGreen: "#204529",
-    grayF1: "#212529",
-    pumpkin: "#d2d531",
-    veryLightBlack: "rgba(0, 0, 0, 0.5)",
-    mediumLightGray: "#999",
     yellow: "yellow"
   },
 };
@@ -22,14 +14,8 @@ const BACKGROUND = {
     white: "#fff",
     black: "#000",
     veryLightBlack: "rgba(0, 0, 0, 0.1)",
-    darkBlue: "#0d253f",
-    darkBluePlus: "#081c22",
-    blue: "#004e92",
-    lightBlue: "#01b4e4",
-    lightGreen: "#90cea1",
     grayBG1_base: "#e4e7eb",
     grayBG1_hover: "#ced3db",
-    veryLightBlack_Dot5: "rgba(0, 0, 0, 0.5)",
     goldenrod: "#DAA520",
     yellow: "yellow",
   },
@@ -41,12 +27,12 @@ const BACKGROUND = {
 
 const BORDER = {
   color: {
+    black: "#000",
     lightGray: "#e3e3e3",
     veryLightGray: "#eee",
   },
   radius: {
     default: "0.5rem",
-    mobile: "0.375rem",
   },
 };
 

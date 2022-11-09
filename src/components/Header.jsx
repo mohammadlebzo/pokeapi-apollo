@@ -1,6 +1,5 @@
 import { FONT, BACKGROUND, IMAGE, MEDIA } from "constants/styles/StyleParams";
 import styled from "styled-components";
-import { useState, useEffect, useCallback } from "react";
 
 const Content = styled.div`
   width: 100%;
@@ -72,17 +71,6 @@ const SubMediaMobile = styled.div`
   }
 `;
 
-const SideMenu = styled.li`
-  width: 33%;
-  display: flex;
-  align-items: center;
-  & span {
-    background-image: url(${BACKGROUND.iconURL.sideMenu});
-    filter: invert(1);
-    font-size: 1.4rem;
-  }
-`;
-
 function Header() {
 
   return (
@@ -91,14 +79,14 @@ function Header() {
         <Content>
           <NavWrapper>
             <SubMedia>
-              <LogoWrapper href="">
+              <LogoWrapper href="/">
                 <img src={IMAGE.logo} alt="" width={200} height={70} />
               </LogoWrapper>
             </SubMedia>
 
             <SubMediaMobile>
               <LogoMobile>
-                <a href="">
+                <a href="/">
                   <img src={IMAGE.logo} alt="" width={130} height={50} />
                 </a>
               </LogoMobile>

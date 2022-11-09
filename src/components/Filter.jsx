@@ -3,12 +3,6 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useRef } from "react";
 
-const MainFilterWrapper = styled.div`
-  justify-content: right;
-  display: flex;
-  margin-top: 5rem;
-`;
-
 const FilterSortCard = styled.div`
   &:first-of-type {
     margin-top: 0;
@@ -24,7 +18,7 @@ const FilterSortCard = styled.div`
   justify-content: space-between;
   overflow: hidden;
   box-shadow: 0 0.25rem 0.5rem ${BACKGROUND.color.veryLightBlack};
-  
+
   margin-right: 18rem;
 
   @media screen and (${MEDIA.mobile}) {
@@ -82,6 +76,12 @@ const FilterContainer = styled.div`
   }
 `;
 
+const MainFilterWrapper = styled.div`
+  justify-content: right;
+  display: flex;
+  margin-top: 5rem;
+`;
+
 function Filter({ setFilter }) {
   const option = useRef();
 
@@ -89,9 +89,9 @@ function Filter({ setFilter }) {
     e.preventDefault();
 
     let content = e.target.value.split(".");
-    let contentToObject = JSON.parse(`{"${content[0]}": "${content[1]}"}`)
-    setFilter(contentToObject)
-  }
+    let contentToObject = JSON.parse(`{"${content[0]}": "${content[1]}"}`);
+    setFilter(contentToObject);
+  };
 
   return (
     <MainFilterWrapper>
@@ -121,7 +121,7 @@ function Filter({ setFilter }) {
 }
 
 Filter.propTypes = {
-    setFilter: PropTypes.func
+  setFilter: PropTypes.func,
 };
 
 export default Filter;

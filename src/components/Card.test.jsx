@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import Card from "components/Card";
 import { MemoryRouter } from "react-router-dom";
 
@@ -21,3 +20,4 @@ describe("Card component", () => {
     expect(getByText("W:")).toBeInTheDocument();
   });
 });
+

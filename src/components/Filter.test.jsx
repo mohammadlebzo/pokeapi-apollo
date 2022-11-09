@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { OPTIONS_MOCK_DATA } from "constants/styles/mocks/MockData";
+import { OPTIONS_MOCK_DATA } from "constants/mocks/MockData";
 import userEvent from "@testing-library/user-event";
 import Filter from "components/Filter";
 

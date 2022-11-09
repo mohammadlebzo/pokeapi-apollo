@@ -5,7 +5,7 @@ import SearchBar from "components/SearchBar";
 import Filter from "components/Filter";
 
 import { useState, useEffect } from "react";
-import { BACKGROUND, FONT } from "constants/styles/StyleParams";
+import { BACKGROUND, BORDER, FONT } from "constants/styles/StyleParams";
 
 let DEFULT = new Array(20).fill(0);
 
@@ -41,10 +41,31 @@ const DEFULT_TRACK = gql`
   }
 `;
 
-const MainWrapper = styled.div`
-  justify-content: center;
-  align-items: center;
+const Button = styled.button`
+  &:first-of-type {
+    margin: 0;
+  }
+
+  margin-left: 1rem;
+  color: ${FONT.color.black};
+  padding: 0.938rem 2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+
+  border: solid 0.188rem ${BORDER.color.black};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${BACKGROUND.color.goldenrod};
+  }
+`;
+
+const ButtonsWrapper = styled.div`
   display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
 `;
 
 const CardsWrapper = styled.div`
@@ -59,31 +80,10 @@ const CardsWrapper = styled.div`
   align-items: center;
 `;
 
-const Button = styled.button`
-  &:first-of-type {
-    margin: 0;
-  }
-
-  margin-left: 1rem;
-  color: ${FONT.color.black};
-  padding: 0.938rem 2rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1rem;
-
-  border: solid 0.188rem black;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${BACKGROUND.color.goldenrod};
-  }
-`;
-
-const ButtonsWrapper = styled.div`
-  display: flex;
+const MainWrapper = styled.div`
   justify-content: center;
-  margin-bottom: 4rem;
+  align-items: center;
+  display: flex;
 `;
 
 function Tracks() {
@@ -121,7 +121,12 @@ function Tracks() {
 
   return (
     <>
-      <SearchBar setSearchName={setSearchName} setPage={setPage} />
+      <SearchBar
+        setSearchName={setSearchName}
+        setPage={setPage}
+        setOffset={setOffset}
+        offset={offset}
+      />
       {page > 0 && <Filter setFilter={setFilter} />}
       <MainWrapper>
         <CardsWrapper>
@@ -138,7 +143,9 @@ function Tracks() {
         {page !== 0 && (
           <>
             {page !== 1 && <Button onClick={handlePagePrev}>Prev</Button>}
-            {!(offset + 20 >= remaining) && <Button onClick={handlePageNext}>Next</Button>}
+            {!(offset + 20 >= remaining) && (
+              <Button onClick={handlePageNext}>Next</Button>
+            )}
           </>
         )}
       </ButtonsWrapper>

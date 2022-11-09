@@ -1,21 +1,20 @@
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import { IMAGE, FONT } from "constants/styles/StyleParams";
+import { IMAGE, FONT, BORDER } from "constants/styles/StyleParams";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const CardCateg = styled.div`
   margin: 0.625rem;
   margin-bottom: 0.625rem;
   background: linear-gradient(to right, goldenrod, yellow, goldenrod);
   border-radius: 0.313rem;
-  border: solid 0.313rem black;
+  border: solid 0.313rem ${BORDER.color.black};
 `;
 
 const CardWrapper = styled.div`
   width: 18.75rem;
   height: 22.5rem;
   position: relative;
-
   box-shadow: 0 0.313rem 0.313rem 0 rgba(0, 0, 0, 0.3);
 `;
 
@@ -29,7 +28,7 @@ const CardTitle = styled(Link)`
   padding-left: 0.625rem;
   text-transform: capitalize;
   text-decoration: none;
-  color: black;
+  color: ${FONT.color.black};
 
   &:hover {
     color: ${FONT.color.yellow};
@@ -48,17 +47,9 @@ const ImageWrapper = styled.div`
   padding: 1.25rem;
 `;
 
-const TitleWrapper = styled.div`
-  margin-top: 1.25rem;
-  margin-left: 1.25rem;
-  margin-right: 1.25rem;
-  background-color: goldenrod;
-  box-shadow: 0.063rem 0.313rem 0.313rem 0.063rem rgba(0, 0, 0, 0.3);
-`;
-
 const InfoWrapper = styled.div`
   border-radius: 0.313rem;
-  border: solid 0.188rem black;
+  border: solid 0.188rem ${BORDER.color.black};
   margin-left: 1.25rem;
   margin-right: 1.25rem;
   height: 7.5rem;
@@ -66,7 +57,7 @@ const InfoWrapper = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  border: solid 0.188rem black;
+  border: solid 0.188rem ${BORDER.color.black};
   border-radius: 0.25rem;
 `;
 
@@ -91,13 +82,21 @@ const InnerInfoTitle = styled.p`
   font-weight: bold;
 `;
 
+const TitleWrapper = styled.div`
+  margin-top: 1.25rem;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  background-color: goldenrod;
+  box-shadow: 0.063rem 0.313rem 0.313rem 0.063rem rgba(0, 0, 0, 0.3);
+`;
+
 function Card({ pokemon }) {
   return (
     <CardCateg>
       <CardWrapper>
         <CardContent>
           <TitleWrapper>
-            <CardTitle to={`details/${pokemon.id}`} >
+            <CardTitle to={`details/${pokemon.id}`}>
               {pokemon?.name ?? "Name"}
             </CardTitle>
           </TitleWrapper>
@@ -109,8 +108,7 @@ function Card({ pokemon }) {
           <InfoWrapper>
             <InfoSectionWrapperFloat floatSide={"right"}>
               <CardText>
-                <b>Base XP:</b>{" "}
-                {pokemon?.base_experience ?? "000"}
+                <b>Base XP:</b> {pokemon?.base_experience ?? "000"}
               </CardText>
             </InfoSectionWrapperFloat>
 

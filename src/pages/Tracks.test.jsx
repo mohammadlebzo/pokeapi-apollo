@@ -1,11 +1,11 @@
 import "@testing-library/jest-dom";
-import { render, screen, rerender } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { DEFULT_TRACK } from "pages/Tracks";
 import {
   DEFULT_TRACK_MOCK_RESULT,
   SEARCH_MOCK_RESULT,
-} from "constants/styles/mocks/MockData";
+} from "constants/mocks/MockData";
 import Tracks from "pages/Tracks";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
@@ -42,7 +42,7 @@ const mocks = [
   },
 ];
 
-const errorMock = [
+const errorMocks = [
   {
     request: {
       query: DEFULT_TRACK,
@@ -56,7 +56,7 @@ describe("Tracks component", () => {
   it("renders an error messege", async () => {
     render(
       <MemoryRouter>
-        <MockedProvider mocks={errorMock} addTypename={false}>
+        <MockedProvider mocks={errorMocks} addTypename={false}>
           <Tracks />
         </MockedProvider>
       </MemoryRouter>

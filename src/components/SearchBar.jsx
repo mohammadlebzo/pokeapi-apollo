@@ -4,13 +4,6 @@ import { BACKGROUND } from "constants/styles/StyleParams";
 
 import { useRef } from "react";
 
-const Wrapper = styled.div`
-  display: flex;
-  margin-top: 10rem;
-  box-sizing: border-box;
-  justify-content: center;
-`;
-
 const Form = styled.form`
   width: 60%;
   display: flex;
@@ -53,7 +46,14 @@ const SearchItem = styled.span`
   height: 2.1rem;
 `;
 
-function SearchBar({ setSearchName, setPage }) {
+const Wrapper = styled.div`
+  display: flex;
+  margin-top: 10rem;
+  box-sizing: border-box;
+  justify-content: center;
+`;
+
+function SearchBar({ setSearchName, setPage, setOffset }) {
   const inputRef = useRef();
 
   const submitHandler = (e) => {
@@ -62,6 +62,7 @@ function SearchBar({ setSearchName, setPage }) {
     if (inputRef.current.value) {
       setSearchName({ _ilike: inputRef.current.value });
       setPage(0);
+      setOffset(0);
     } else {
       setSearchName({});
       setPage(1);
@@ -93,8 +94,10 @@ function SearchBar({ setSearchName, setPage }) {
 }
 
 SearchBar.propTypes = {
+  offset: PropTypes.number,
   setSearchName: PropTypes.func,
   setPage: PropTypes.func,
+  setOffset: PropTypes.func,
 };
 
 export default SearchBar;

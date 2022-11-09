@@ -1,18 +1,18 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
-import { DETAILS_MOCK_RESULT } from "constants/styles/mocks/MockData";
-import { DEFULT_TRACK } from "components/CardDetails";
+import { DETAILS_MOCK_RESULT } from "constants/mocks/MockData";
+import { DETAILS_TRACK } from "components/CardDetails";
 import CardDetails from "components/CardDetails";
 import { MemoryRouter } from "react-router-dom";
+import { IMAGE } from "constants/styles/StyleParams";
 
-const { findByText, findAllByText, getByRole, getAllByRole } = screen;
+const { findByText, getByRole, getByText } = screen;
 
 const mocks = [
   {
     request: {
-      query: DEFULT_TRACK,
-
+      query: DETAILS_TRACK,
       variables: {
         pokeid: 1,
       },
@@ -25,14 +25,14 @@ const mocks = [
 const errorMock = [
   {
     request: {
-      query: DEFULT_TRACK,
-      variables: { pokeid: 1, },
+      query: DETAILS_TRACK,
+      variables: { pokeid: 1 },
     },
     error: new Error("An error occurred"),
   },
 ];
 
-describe("Tracks component", () => {
+describe("CardDetails component", () => {
   it("renders an error messege", async () => {
     render(
       <MemoryRouter>
@@ -48,10 +48,6 @@ describe("Tracks component", () => {
   });
 
   beforeEach(() => {
-    window.history.pushState({}, 'pokeid', '/details/1');
-
-    console.log(global.window.location.href);
-
     render(
       <MemoryRouter>
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -65,31 +61,11 @@ describe("Tracks component", () => {
     expect(await findByText("bulbasaur")).toBeInTheDocument();
   });
 
-  //   it("moves to the next and prev pages ", async () => {
-  //     const nextButton = getByRole("button", { name: "Next" });
-  //     expect(nextButton).toHaveTextContent("Next");
-
-  //     act(() => userEvent.click(nextButton));
-
-  //     const prevButton = getByRole("button", { name: "Prev" });
-  //     expect(prevButton).toHaveTextContent("Prev");
-
-  //     act(() => userEvent.click(prevButton));
-
-  //     expect(prevButton).not.toBeInTheDocument(prevButton);
-  //   });
-
-  //   it("renders the search reasult when pressing the button", async () => {
-  //     // expect(getByRole("")).toBeInTheDocument()
-  //     const inputField = getByRole("textbox");
-  //     const searchButton = getAllByRole("button")[0];
-
-  //     act(() => userEvent.type(inputField, "bulbasaur"));
-  //     act(() => userEvent.click(searchButton));
-
-  //     expect(await findAllByText("chlorophyll")).toHaveLength(1);
-
-  //     act(() => userEvent.type(inputField, "{selectall}{del}"));
-  //     act(() => userEvent.click(searchButton));
-  //   });
+  it("renders constants", () => {
+    expect(getByRole("img")).toHaveAttribute("src", IMAGE.card);
+    expect(getByText("Base XP:")).toBeInTheDocument();
+    expect(getByText("Height:")).toBeInTheDocument();
+    expect(getByText("Weight:")).toBeInTheDocument();
+    expect(getByText("Abilities")).toBeInTheDocument();
+  });
 });
