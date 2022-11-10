@@ -67,7 +67,7 @@ const Button = styled.button`
 const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 4rem;
+  padding-bottom: 10rem;
 `;
 
 const CardsWrapper = styled.div`
@@ -86,6 +86,13 @@ const MainWrapper = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
+`;
+
+const NoDataMessege = styled.p`
+  font-family: ${FONT.family.main};
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 10rem;
 `;
 
 function Tracks() {
@@ -129,16 +136,18 @@ function Tracks() {
         setOffset={setOffset}
         offset={offset}
       />
-      {page > 0 && <Filter setFilter={setFilter} />}
+      {page > 0 && <Filter setFilter={setFilter} setOffset={setOffset} />}
       <MainWrapper>
         <CardsWrapper>
-          {loading
-            ? DEFULT.map((defPokemon, idx) => {
-                return <Card key={idx} pokemon={{}} />;
-              })
-            : data.pokemon.map((pokemon) => {
-                return <Card key={pokemon.id} pokemon={pokemon} />;
-              })}
+
+          {data?.pokemon?.map((pokemon) => {
+            return <Card key={pokemon.id} pokemon={pokemon} />;
+          }) ??
+            DEFULT.map((defPokemon, idx) => {
+              return <Card key={idx} pokemon={{}} />;
+            })}
+
+          {data?.pokemon?.length == 0 && <NoDataMessege>No Data</NoDataMessege>}
         </CardsWrapper>
       </MainWrapper>
       <ButtonsWrapper>

@@ -5,13 +5,14 @@ import { DEFULT_TRACK } from "pages/Tracks";
 import {
   DEFULT_TRACK_MOCK_RESULT,
   SEARCH_MOCK_RESULT,
+  NO_DATA_MOCK_RESULT
 } from "constants/mocks/MockData";
 import Tracks from "pages/Tracks";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
 
-const { findAllByText, getByRole, getAllByRole } = screen;
+const { findByText, findAllByText, getByRole, getAllByRole } = screen;
 
 const mocks = [
   {
@@ -39,6 +40,19 @@ const mocks = [
     },
 
     result: SEARCH_MOCK_RESULT,
+  },
+  {
+    request: {
+      query: DEFULT_TRACK,
+
+      variables: {
+        searchName: { _ilike: "b" },
+        filter: {},
+        offset: 0,
+      },
+    },
+
+    result: NO_DATA_MOCK_RESULT,
   },
 ];
 
@@ -96,7 +110,6 @@ describe("Tracks component", () => {
   });
 
   it("renders the search reasult when pressing the button", async () => {
-    // expect(getByRole("")).toBeInTheDocument()
     const inputField = getByRole("textbox");
     const searchButton = getAllByRole("button")[0];
 
@@ -107,5 +120,15 @@ describe("Tracks component", () => {
 
     act(() => userEvent.type(inputField, "{selectall}{del}"));
     act(() => userEvent.click(searchButton));
+  });
+
+  it("renders 'No Data' when there is no matching search results", async () => {
+    const inputField = getByRole("textbox");
+    const searchButton = getAllByRole("button")[0];
+
+    act(() => userEvent.type(inputField, "b"));
+    act(() => userEvent.click(searchButton));
+
+    expect(await findByText("No Data")).toBeInTheDocument();
   });
 });

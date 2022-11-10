@@ -6,7 +6,7 @@ import Filter from "components/Filter";
 const { getByRole } = screen;
 
 beforeEach(() => {
-  render(<Filter setFilter={(data) => data} />);
+  render(<Filter setFilter={(data) => data} setOffset={(data) => data} />);
 });
 
 describe("Filter component", () => {

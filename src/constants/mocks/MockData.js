@@ -122,9 +122,16 @@ const DETAILS_MOCK_RESULT = {
   },
 };
 
+const NO_DATA_MOCK_RESULT = {
+  data: {
+    pokemon: [],
+  },
+};
+
 export {
   OPTIONS_MOCK_DATA,
   DEFULT_TRACK_MOCK_RESULT,
   SEARCH_MOCK_RESULT,
   DETAILS_MOCK_RESULT,
+  NO_DATA_MOCK_RESULT
 };

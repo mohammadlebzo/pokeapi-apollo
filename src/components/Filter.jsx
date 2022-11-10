@@ -1,4 +1,10 @@
-import { FONT, BACKGROUND, MEDIA, BORDER, OUTLINE } from "constants/styles/StyleParams";
+import {
+  FONT,
+  BACKGROUND,
+  MEDIA,
+  BORDER,
+  OUTLINE,
+} from "constants/styles/StyleParams";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useRef } from "react";
@@ -100,7 +106,7 @@ const ReaderOnlyLabel = styled.label`
     width: 1px;
 `;
 
-function Filter({ setFilter }) {
+function Filter({ setFilter, setOffset }) {
   const option = useRef();
 
   const handleSelection = (e) => {
@@ -109,6 +115,7 @@ function Filter({ setFilter }) {
     let content = e.target.value.split(".");
     let contentToObject = JSON.parse(`{"${content[0]}": "${content[1]}"}`);
     setFilter(contentToObject);
+    setOffset(0);
   };
 
   return (
@@ -122,6 +129,7 @@ function Filter({ setFilter }) {
             id="sortBy"
             onChange={handleSelection}
           >
+            <option value="" selected disabled hidden>-- Select Option --</option>
             <option value="name.desc">Name Descending</option>
             <option value="name.asc">Name Ascending</option>
             <option value="height.desc">Height Descending</option>
@@ -141,6 +149,7 @@ function Filter({ setFilter }) {
 
 Filter.propTypes = {
   setFilter: PropTypes.func,
+  setOffset: PropTypes.func,
 };
 
 export default Filter;
