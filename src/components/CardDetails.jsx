@@ -41,7 +41,8 @@ const Button = styled(Link)`
   border: solid 0.188rem ${BORDER.color.black};
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: ${BACKGROUND.color.goldenrod};
   }
 `;
@@ -148,7 +149,7 @@ function CardDetails() {
 
       <Wrapper style={{ marginTop: "8.125rem" }}>
         <ImageWrapper>
-          <img src={IMAGE.card} alt="" />
+          <img src={IMAGE.card} alt="Pokemon Logo" />
         </ImageWrapper>
       </Wrapper>
 

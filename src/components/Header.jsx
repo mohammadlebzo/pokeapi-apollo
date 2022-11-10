@@ -1,4 +1,4 @@
-import { FONT, BACKGROUND, IMAGE, MEDIA } from "constants/styles/StyleParams";
+import { FONT, BACKGROUND, IMAGE, MEDIA, OUTLINE, BORDER } from "constants/styles/StyleParams";
 import styled from "styled-components";
 
 const Content = styled.div`
@@ -27,6 +27,11 @@ const HeaderEl = styled.header`
 `;
 
 const LogoWrapper = styled.a`
+  &:focus {
+    outline: 0;
+    border-radius: ${BORDER.radius.focus};
+    box-shadow: ${OUTLINE.params} ${OUTLINE.color};
+  }
   @media screen and (${MEDIA.mobile}) {
     display: none;
   }
@@ -72,22 +77,31 @@ const SubMediaMobile = styled.div`
 `;
 
 function Header() {
-
   return (
     <>
       <HeaderEl>
         <Content>
           <NavWrapper>
             <SubMedia>
-              <LogoWrapper href="/">
-                <img src={IMAGE.logo} alt="Pokemone Logo" width={200} height={70} />
+              <LogoWrapper href="/" tabIndex={0}>
+                <img
+                  src={IMAGE.logo}
+                  alt="Pokemone Logo"
+                  width={200}
+                  height={70}
+                />
               </LogoWrapper>
             </SubMedia>
 
             <SubMediaMobile>
               <LogoMobile>
                 <a href="/">
-                  <img src={IMAGE.logo} alt="Pokemone Logo" width={130} height={50} />
+                  <img
+                    src={IMAGE.logo}
+                    alt="Pokemone Logo"
+                    width={130}
+                    height={50}
+                  />
                 </a>
               </LogoMobile>
             </SubMediaMobile>

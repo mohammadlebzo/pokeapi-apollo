@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { BACKGROUND } from "constants/styles/StyleParams";
-
-import { useRef } from "react";
+import { BACKGROUND, OUTLINE, BORDER } from "constants/styles/StyleParams";
+import { useEffect, useRef } from "react";
 
 const Form = styled.form`
   width: 60%;
@@ -16,6 +15,12 @@ const Form = styled.form`
     width: 80%;
     background: ${BACKGROUND.color.veryLightBlack};
     border-radius: 0.313rem 0 0 0.313rem;
+
+    &:focus {
+      outline: 0;
+      border-radius: ${BORDER.radius.focus};
+      box-shadow: ${OUTLINE.params} ${OUTLINE.color};
+    }
   }
 
   & button {
@@ -23,7 +28,6 @@ const Form = styled.form`
     width: 20%;
     padding: 0.75rem;
     background: ${BACKGROUND.color.goldenrod};
-    // color: white;
     font-size: 1.063rem;
     border: none;
     border-left: none;
@@ -32,6 +36,12 @@ const Form = styled.form`
 
     &:hover {
       background: ${BACKGROUND.color.yellow};
+    }
+
+    &:focus {
+      outline: 0;
+      border-radius: ${BORDER.radius.focus};
+      box-shadow: ${OUTLINE.params} ${OUTLINE.color};
     }
   }
 `;
@@ -53,8 +63,21 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
+const ReaderOnlyLabel = styled.label`
+    border: 0;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip; rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+`;
+
 function SearchBar({ setSearchName, setPage, setOffset }) {
-  const inputRef = useRef();
+
+  const inputRef = useRef(null);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -69,11 +92,14 @@ function SearchBar({ setSearchName, setPage, setOffset }) {
     }
   };
 
+
   return (
     <Wrapper>
       <Form onSubmit={submitHandler}>
+        <ReaderOnlyLabel htmlFor="searchInput">Pokemon name</ReaderOnlyLabel>
         <input
           ref={inputRef}
+          id="searchInput"
           name="searchInput"
           type="text"
           placeholder="Search.."
@@ -85,7 +111,10 @@ function SearchBar({ setSearchName, setPage, setOffset }) {
             }
           }}
         />
-        <button type="submit">
+        <ReaderOnlyLabel htmlFor="searchButton">
+          Search for pokemon name
+        </ReaderOnlyLabel>
+        <button type="submit" id="searchButton">
           <SearchItem></SearchItem>
         </button>
       </Form>

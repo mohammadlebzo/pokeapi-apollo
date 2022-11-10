@@ -57,7 +57,9 @@ const Button = styled.button`
   border: solid 0.188rem ${BORDER.color.black};
   cursor: pointer;
 
-  &:hover {
+  &:hover,
+  &:focus {
+    outline: 0;
     background-color: ${BACKGROUND.color.goldenrod};
   }
 `;

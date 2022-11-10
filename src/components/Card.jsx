@@ -1,4 +1,4 @@
-import { IMAGE, FONT, BORDER } from "constants/styles/StyleParams";
+import { IMAGE, FONT, BORDER, OUTLINE } from "constants/styles/StyleParams";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import styled from "styled-components";
@@ -29,6 +29,12 @@ const CardTitle = styled(Link)`
   text-transform: capitalize;
   text-decoration: none;
   color: ${FONT.color.black};
+
+  &:focus {
+    outline: 0;
+    border-radius: ${BORDER.radius.focus};
+    box-shadow: ${OUTLINE.params} ${OUTLINE.color};
+  }
 
   &:hover {
     color: ${FONT.color.yellow};
@@ -102,7 +108,7 @@ function Card({ pokemon }) {
           </TitleWrapper>
 
           <ImageWrapper>
-            <Image src={IMAGE.card} alt="" />
+            <Image src={IMAGE.card} alt="Pokemon Logo" />
           </ImageWrapper>
 
           <InfoWrapper>

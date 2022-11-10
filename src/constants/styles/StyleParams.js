@@ -5,7 +5,7 @@ const FONT = {
   color: {
     white: "#fff",
     black: "#000",
-    yellow: "yellow"
+    yellow: "yellow",
   },
 };
 
@@ -33,6 +33,7 @@ const BORDER = {
   },
   radius: {
     default: "0.5rem",
+    focus: "0.3rem",
   },
 };
 
@@ -41,8 +42,13 @@ const IMAGE = {
   card: "https://cdn.mos.cms.futurecdn.net/nJqzZf3iyhawJfofUMicFV-1200-80.jpg",
 };
 
+const OUTLINE = {
+  color: "#000",
+  params: "0.1rem 0.1rem 0 0.15rem",
+};
+
 const MEDIA = {
   mobile: "max-width: 28.125rem", // 450px
 };
 
-export { FONT, BACKGROUND, IMAGE, MEDIA, BORDER };
+export { FONT, BACKGROUND, IMAGE, MEDIA, BORDER, OUTLINE };

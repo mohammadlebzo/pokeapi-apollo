@@ -1,4 +1,4 @@
-import { FONT, BACKGROUND, MEDIA, BORDER } from "constants/styles/StyleParams";
+import { FONT, BACKGROUND, MEDIA, BORDER, OUTLINE } from "constants/styles/StyleParams";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useRef } from "react";
@@ -61,6 +61,12 @@ const FilterContainer = styled.div`
 
     cursor: pointer;
 
+    &:focus {
+      outline: 0;
+      border-radius: ${BORDER.radius.focus};
+      box-shadow: ${OUTLINE.params} ${OUTLINE.color};
+    }
+
     & option {
       background-color: ${BACKGROUND.color.white};
       font-weight: 600;
@@ -82,6 +88,18 @@ const MainFilterWrapper = styled.div`
   margin-top: 5rem;
 `;
 
+const ReaderOnlyLabel = styled.label`
+    border: 0;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip; rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+`;
+
 function Filter({ setFilter }) {
   const option = useRef();
 
@@ -97,6 +115,7 @@ function Filter({ setFilter }) {
     <MainFilterWrapper>
       <FilterSortCard>
         <FilterContainer>
+          <ReaderOnlyLabel htmlFor="sortBy">Sort pokemons by</ReaderOnlyLabel>
           <select
             ref={option}
             name="sortBy"
