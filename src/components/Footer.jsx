@@ -4,8 +4,6 @@ import styled from "styled-components";
 const FooterEl = styled.footer`
   font-family: ${FONT.family.main};
   background-color: ${BACKGROUND.color.goldenrod};
-  // height: 6.25rem;
-  // position: relative;
   width: 100%;
   height: 6.25rem;
   position: absolute;

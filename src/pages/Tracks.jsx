@@ -139,7 +139,6 @@ function Tracks() {
       {page > 0 && <Filter setFilter={setFilter} setOffset={setOffset} />}
       <MainWrapper>
         <CardsWrapper>
-
           {data?.pokemon?.map((pokemon) => {
             return <Card key={pokemon.id} pokemon={pokemon} />;
           }) ??

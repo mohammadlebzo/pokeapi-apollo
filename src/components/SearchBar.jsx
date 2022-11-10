@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { BACKGROUND, OUTLINE, BORDER } from "constants/styles/StyleParams";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 const Form = styled.form`
   width: 60%;
