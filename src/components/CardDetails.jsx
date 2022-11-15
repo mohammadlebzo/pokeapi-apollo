@@ -147,7 +147,7 @@ function CardDetails() {
         <Button to={"/"}>Back</Button>
       </ButtonsWrapper>
 
-      <Wrapper style={{ marginTop: "8.125rem" }}>
+      <Wrapper style={{ marginTop: "1.125rem" }}>
         <ImageWrapper>
           <img src={IMAGE.card} alt="Pokemon Logo" />
         </ImageWrapper>

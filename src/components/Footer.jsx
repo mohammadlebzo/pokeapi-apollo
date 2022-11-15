@@ -8,6 +8,7 @@ const FooterEl = styled.footer`
   height: 6.25rem;
   position: absolute;
   bottom: 0;
+  clear: both;
 `;
 
 function Footer() {
