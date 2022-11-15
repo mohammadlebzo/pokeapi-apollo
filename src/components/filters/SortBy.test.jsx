@@ -1,15 +1,21 @@
 import { render, screen } from "@testing-library/react";
 import { OPTIONS_MOCK_DATA } from "constants/mocks/MockData";
 import userEvent from "@testing-library/user-event";
-import Filter from "components/Filter";
+import SortBy from "components/filters/SortBy";
 
 const { getByRole } = screen;
 
 beforeEach(() => {
-  render(<Filter setFilter={(data) => data} setOffset={(data) => data} />);
+  render(
+    <SortBy
+      setFilter={(data) => data}
+      setOffset={(data) => data}
+      setSpeciesFilterToggle={(data) => data}
+    />
+  );
 });
 
-describe("Filter component", () => {
+describe("SortBy component", () => {
   it("renders the options content", () => {
     const options = OPTIONS_MOCK_DATA.map((option) =>
       getByRole("option", { name: option })

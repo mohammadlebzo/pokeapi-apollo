@@ -25,7 +25,7 @@ const FilterSortCard = styled.div`
   overflow: hidden;
   box-shadow: 0 0.25rem 0.5rem ${BACKGROUND.color.veryLightBlack};
 
-  margin-right: 18rem;
+  // margin-right: 18rem;
 
   @media screen and (${MEDIA.mobile}) {
     min-width: 100%;
@@ -40,6 +40,7 @@ const FilterContainer = styled.div`
   border-top: 0.063rem solid ${BORDER.color.veryLightGray};
   padding: 0.2rem 1rem 1rem 1rem;
   background-color: ${BACKGROUND.color.goldenrod};
+  width: 100%;
 
   & h3 {
     display: inline-flex;
@@ -89,57 +90,52 @@ const FilterContainer = styled.div`
 `;
 
 const MainFilterWrapper = styled.div`
-  justify-content: right;
+  justify-content: left;
   display: flex;
   margin-top: 5rem;
 `;
 
 const ReaderOnlyLabel = styled.label`
-    border: 0;
-    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-    clip; rect(1px, 1px, 1px, 1px);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-`;
+      border: 0;
+      clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+      clip; rect(1px, 1px, 1px, 1px);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+  `;
 
-function Filter({ setFilter, setOffset }) {
+function SpeciesFilter({ options, getPokemons, setSpeciesFilterToggle }) {
   const option = useRef();
-
-  const handleSelection = (e) => {
-    e.preventDefault();
-
-    let content = e.target.value.split(".");
-    let contentToObject = JSON.parse(`{"${content[0]}": "${content[1]}"}`);
-    setFilter(contentToObject);
-    setOffset(0);
-  };
 
   return (
     <MainFilterWrapper>
       <FilterSortCard>
         <FilterContainer>
-          <ReaderOnlyLabel htmlFor="sortBy">Sort pokemons by</ReaderOnlyLabel>
+          <ReaderOnlyLabel htmlFor="filter">Select Pokemon Specy</ReaderOnlyLabel>
           <select
             ref={option}
-            name="sortBy"
-            id="sortBy"
-            onChange={handleSelection}
+            name="filter"
+            id="filter"
+            onChange={() => {
+              getPokemons({
+                variables: { filterPokemonID: option.current.value },
+              });
+              setSpeciesFilterToggle(true);
+            }}
           >
-            <option value="" selected disabled hidden>-- Select Option --</option>
-            <option value="name.desc">Name Descending</option>
-            <option value="name.asc">Name Ascending</option>
-            <option value="height.desc">Height Descending</option>
-            <option value="height.asc">Height Ascending</option>
-            <option value="base_experience.desc">
-              Base Experience Descending
+            <option value="" selected disabled hidden>
+              -- Select Specy --
             </option>
-            <option value="base_experience.asc">
-              Base Experience Ascending
-            </option>
+            {options?.map((item) => {
+              return (
+                <option value={`${item.id}`}>
+                  {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
+                </option>
+              );
+            })}
           </select>
         </FilterContainer>
       </FilterSortCard>
@@ -147,9 +143,10 @@ function Filter({ setFilter, setOffset }) {
   );
 }
 
-Filter.propTypes = {
-  setFilter: PropTypes.func,
-  setOffset: PropTypes.func,
+SpeciesFilter.propTypes = {
+  options: PropTypes.array,
+  getPokemons: PropTypes.func,
+  setSpeciesFilterToggle: PropTypes.func,
 };
 
-export default Filter;
+export default SpeciesFilter;

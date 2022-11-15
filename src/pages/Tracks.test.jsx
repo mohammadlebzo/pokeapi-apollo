@@ -1,18 +1,20 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
-import { DEFULT_TRACK } from "pages/Tracks";
+import { DEFULT_TRACK, SELECTED_POKEMON_TRACK } from "pages/Tracks";
 import {
   DEFULT_TRACK_MOCK_RESULT,
   SEARCH_MOCK_RESULT,
-  NO_DATA_MOCK_RESULT
+  NO_DATA_MOCK_RESULT,
+  SPECISES_FILTER_DATA_RESULT,
 } from "constants/mocks/MockData";
 import Tracks from "pages/Tracks";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
 
-const { findByText, findAllByText, getByRole, getAllByRole } = screen;
+const { findByText, findAllByText, getByRole, findByRole, getAllByRole, getByLabelText, findAllByRole } =
+  screen;
 
 const mocks = [
   {
@@ -53,6 +55,17 @@ const mocks = [
     },
 
     result: NO_DATA_MOCK_RESULT,
+  },
+  {
+    request: {
+      query: SELECTED_POKEMON_TRACK,
+
+      variables: {
+        filterPokemonID: "16",
+      },
+    },
+
+    result: SPECISES_FILTER_DATA_RESULT,
   },
 ];
 
@@ -122,8 +135,17 @@ describe("Tracks component", () => {
     act(() => userEvent.click(searchButton));
   });
 
+  it("renders the correct species when changing the combobox value", async () => {
+    const filterCombobox = getByLabelText("Select Pokemon Specy")
+
+    // expect(await findByRole("option", {name: "Pidgey"})).toBeInTheDocument();
+
+    userEvent.selectOptions(filterCombobox, await findByRole("option", { name: "Pidgey" }))
+    expect(await findByText("pidgey")).toBeInTheDocument();
+  });
+
   it("renders 'No Data' when there is no matching search results", async () => {
-    const inputField = getByRole("textbox");
+    const inputField = getByLabelText("Pokemon name");
     const searchButton = getAllByRole("button")[0];
 
     act(() => userEvent.type(inputField, "b"));
