@@ -3,12 +3,9 @@ import SearchBar from "components/SearchBar";
 
 const { getByRole } = screen;
 
-beforeEach(() => {
-  render(<SearchBar />);
-});
-
 describe("SearchBar component", () => {
   it("renders the main components", () => {
+    render(<SearchBar />);
     expect(getByRole("button")).toBeInTheDocument();
     expect(getByRole("textbox")).toBeInTheDocument();
   });

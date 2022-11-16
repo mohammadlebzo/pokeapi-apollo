@@ -2,8 +2,7 @@ import { useQuery, useLazyQuery, gql } from "@apollo/client";
 import Card from "components/Card";
 import styled from "styled-components";
 import SearchBar from "components/SearchBar";
-import SortBy from "components/filters/SortBy";
-import SpeciesFilter from "components/filters/SpeciesFilter";
+import Filter from "components/Filter";
 
 import { useState, useEffect } from "react";
 import { BACKGROUND, BORDER, FONT } from "constants/styles/StyleParams";
@@ -108,6 +107,13 @@ const CardsWrapper = styled.div`
   align-items: center;
 `;
 
+const FiltersWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-right: 18rem;
+  margin-left: 18rem;
+`;
+
 const MainWrapper = styled.div`
   justify-content: center;
   align-items: center;
@@ -143,20 +149,19 @@ function Tracks() {
     setOffset((prev) => (prev -= 20));
   };
 
-  const { loading, error, data, refetch } = useQuery(DEFULT_TRACK, {
+  const { error, data, refetch } = useQuery(DEFULT_TRACK, {
     variables: { searchName, filter, offset },
   });
 
-  const [
-    getPokemons,
-    { loading: loadFilterData, error: filterDataError, data: filterData },
-  ] = useLazyQuery(SELECTED_POKEMON_TRACK);
+  const [getPokemons, { data: filterData }] = useLazyQuery(
+    SELECTED_POKEMON_TRACK
+  );
 
   let remaining = data?.pokeNum?.aggregate?.count;
 
   useEffect(() => {
     refetch();
-  }, [searchName, filter, page]);
+  }, [searchName, filter, page, refetch]);
 
   if (error) return <p>{`Error! ${error.message}`}</p>;
 
@@ -168,46 +173,45 @@ function Tracks() {
         setOffset={setOffset}
         offset={offset}
       />
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginRight: "18rem",
-          marginLeft: "18rem",
-        }}
-      >
+      <FiltersWrapper>
         {page > 0 && (
-          <SpeciesFilter
+          <Filter
+            filterID={"filterSpecy"}
+            labelTitle={"Select Pokemon Specy"}
+            defaultSelectTitle={"Select Specy"}
             options={data?.species}
             getPokemons={getPokemons}
             setSpeciesFilterToggle={setSpeciesFilterToggle}
           />
         )}
         {page > 0 && (
-          <SortBy
+          <Filter
+            filterID={"sortBy"}
+            labelTitle={"Sort pokemons by"}
+            defaultSelectTitle={"Select Sort Option"}
             setFilter={setFilter}
             setOffset={setOffset}
             setSpeciesFilterToggle={setSpeciesFilterToggle}
           />
         )}
-      </div>
+      </FiltersWrapper>
 
       <MainWrapper>
         <CardsWrapper>
-          {!speciesFilterToggle &&
-            (data?.pokemon?.map((pokemon) => {
-              return <Card key={pokemon.id} pokemon={pokemon} />;
-            }) ??
+          {!speciesFilterToggle
+            ? data?.pokemon?.map((pokemon) => {
+                return <Card key={pokemon.id} pokemon={pokemon} />;
+              }) ??
               DEFULT.map((defPokemon, idx) => {
                 return <Card key={idx} pokemon={{}} />;
-              }))}
+              })
+            : filterData?.species[0]?.pokemons?.map((pokemon) => {
+                return <Card key={pokemon.id} pokemon={pokemon} />;
+              })}
 
-          {speciesFilterToggle &&
-            filterData?.species[0]?.pokemons?.map((pokemon) => {
-              return <Card key={pokemon.id} pokemon={pokemon} />;
-            })}
-
-          {data?.pokemon?.length == 0 && <NoDataMessege>No Data</NoDataMessege>}
+          {data?.pokemon?.length === 0 && (
+            <NoDataMessege>No Data</NoDataMessege>
+          )}
         </CardsWrapper>
       </MainWrapper>
       <ButtonsWrapper>

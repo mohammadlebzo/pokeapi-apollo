@@ -32,6 +32,14 @@ const errorMock = [
   },
 ];
 
+const utils = (
+  <MemoryRouter>
+    <MockedProvider mocks={mocks} addTypename={false}>
+      <CardDetails />
+    </MockedProvider>
+  </MemoryRouter>
+);
+
 describe("CardDetails component", () => {
   it("renders an error messege", async () => {
     render(
@@ -47,21 +55,13 @@ describe("CardDetails component", () => {
     ).toBeInTheDocument();
   });
 
-  beforeEach(() => {
-    render(
-      <MemoryRouter>
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <CardDetails />
-        </MockedProvider>
-      </MemoryRouter>
-    );
-  });
-
   it("renders without error", async () => {
+    render(utils)
     expect(await findByText("bulbasaur")).toBeInTheDocument();
   });
 
   it("renders constants", () => {
+    render(utils)
     expect(getByRole("img")).toHaveAttribute("src", IMAGE.card);
     expect(getByText("Base XP:")).toBeInTheDocument();
     expect(getByText("Height:")).toBeInTheDocument();

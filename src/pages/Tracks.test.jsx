@@ -10,11 +10,16 @@ import {
 } from "constants/mocks/MockData";
 import Tracks from "pages/Tracks";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
 
-const { findByText, findAllByText, getByRole, findByRole, getAllByRole, getByLabelText, findAllByRole } =
-  screen;
+const {
+  findByText,
+  findAllByText,
+  getByRole,
+  findByRole,
+  getAllByRole,
+  getByLabelText,
+} = screen;
 
 const mocks = [
   {
@@ -79,6 +84,14 @@ const errorMocks = [
   },
 ];
 
+const utils = (
+  <MemoryRouter>
+    <MockedProvider mocks={mocks} addTypename={false}>
+      <Tracks />
+    </MockedProvider>
+  </MemoryRouter>
+);
+
 describe("Tracks component", () => {
   it("renders an error messege", async () => {
     render(
@@ -94,62 +107,58 @@ describe("Tracks component", () => {
     ).toBeInTheDocument();
   });
 
-  beforeEach(() => {
-    render(
-      <MemoryRouter>
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <Tracks />
-        </MockedProvider>
-      </MemoryRouter>
-    );
-  });
-
   it("renders without error", async () => {
+    render(utils);
     expect(await findAllByText("chlorophyll")).toHaveLength(2);
   });
 
   it("moves to the next and prev pages ", async () => {
+    render(utils);
     const nextButton = getByRole("button", { name: "Next" });
     expect(nextButton).toHaveTextContent("Next");
 
-    act(() => userEvent.click(nextButton));
+    userEvent.click(nextButton);
 
     const prevButton = getByRole("button", { name: "Prev" });
     expect(prevButton).toHaveTextContent("Prev");
 
-    act(() => userEvent.click(prevButton));
+    userEvent.click(prevButton);
 
     expect(prevButton).not.toBeInTheDocument(prevButton);
   });
 
   it("renders the search reasult when pressing the button", async () => {
+    render(utils);
     const inputField = getByRole("textbox");
     const searchButton = getAllByRole("button")[0];
 
-    act(() => userEvent.type(inputField, "bulbasaur"));
-    act(() => userEvent.click(searchButton));
+    userEvent.type(inputField, "bulbasaur");
+    userEvent.click(searchButton);
 
     expect(await findAllByText("chlorophyll")).toHaveLength(1);
 
-    act(() => userEvent.type(inputField, "{selectall}{del}"));
-    act(() => userEvent.click(searchButton));
+    userEvent.type(inputField, "{selectall}{del}");
+    userEvent.click(searchButton);
   });
 
   it("renders the correct species when changing the combobox value", async () => {
-    const filterCombobox = getByLabelText("Select Pokemon Specy")
+    render(utils);
+    const filterCombobox = getByLabelText("Select Pokemon Specy");
 
-    // expect(await findByRole("option", {name: "Pidgey"})).toBeInTheDocument();
-
-    userEvent.selectOptions(filterCombobox, await findByRole("option", { name: "Pidgey" }))
+    userEvent.selectOptions(
+      filterCombobox,
+      await findByRole("option", { name: "Pidgey" })
+    );
     expect(await findByText("pidgey")).toBeInTheDocument();
   });
 
   it("renders 'No Data' when there is no matching search results", async () => {
+    render(utils);
     const inputField = getByLabelText("Pokemon name");
     const searchButton = getAllByRole("button")[0];
 
-    act(() => userEvent.type(inputField, "b"));
-    act(() => userEvent.click(searchButton));
+    userEvent.type(inputField, "b");
+    userEvent.click(searchButton);
 
     expect(await findByText("No Data")).toBeInTheDocument();
   });

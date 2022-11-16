@@ -47,6 +47,12 @@ const CardText = styled.p`
   margin-bottom: 0.5rem;
 `;
 
+const CardTextAbilities = styled(CardText)`
+  margin-top: 0.188rem;
+  margin-bottom: 0.188rem;
+  text-transform: capitalize;
+`;
+
 const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -131,15 +137,9 @@ function Card({ pokemon }) {
               pokemon?.abilities?.map((ability) => {
                 return (
                   <InfoSectionWrapperClear key={ability.pokemon_v2_ability.id}>
-                    <CardText
-                      style={{
-                        marginTop: "0.188rem",
-                        marginBottom: "0.188rem",
-                        textTransform: "capitalize",
-                      }}
-                    >
+                    <CardTextAbilities>
                       {ability.pokemon_v2_ability.name}
-                    </CardText>
+                    </CardTextAbilities>
                   </InfoSectionWrapperClear>
                 );
               })}

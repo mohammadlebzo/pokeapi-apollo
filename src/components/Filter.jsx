@@ -8,6 +8,7 @@ import {
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useRef } from "react";
+import { OPTIONS_MOCK_DATA } from "constants/mocks/MockData";
 
 const FilterSortCard = styled.div`
   &:first-of-type {
@@ -24,8 +25,6 @@ const FilterSortCard = styled.div`
   justify-content: space-between;
   overflow: hidden;
   box-shadow: 0 0.25rem 0.5rem ${BACKGROUND.color.veryLightBlack};
-
-  // margin-right: 18rem;
 
   @media screen and (${MEDIA.mobile}) {
     min-width: 100%;
@@ -90,8 +89,6 @@ const FilterContainer = styled.div`
 `;
 
 const MainFilterWrapper = styled.div`
-  justify-content: left;
-  display: flex;
   margin-top: 5rem;
 `;
 
@@ -107,35 +104,75 @@ const ReaderOnlyLabel = styled.label`
       width: 1px;
   `;
 
-function SpeciesFilter({ options, getPokemons, setSpeciesFilterToggle }) {
+const OPTIONS_VALUES = [
+  "name.desc",
+  "name.asc",
+  "height.desc",
+  "height.asc",
+  "base_experience.desc",
+  "base_experience.asc",
+];
+
+function Filter({
+  defaultSelectTitle,
+  labelTitle,
+  filterID,
+  setFilter,
+  setOffset,
+  setSpeciesFilterToggle,
+  options,
+  getPokemons,
+}) {
   const option = useRef();
+
+  const handleSelection = (e) => {
+    e.preventDefault();
+
+    let content = e.target.value.split(".");
+    let contentToObject = JSON.parse(`{"${content[0]}": "${content[1]}"}`);
+    setFilter(contentToObject);
+    setOffset(0);
+    setSpeciesFilterToggle(false);
+  };
 
   return (
     <MainFilterWrapper>
       <FilterSortCard>
         <FilterContainer>
-          <ReaderOnlyLabel htmlFor="filter">Select Pokemon Specy</ReaderOnlyLabel>
+          <ReaderOnlyLabel htmlFor={filterID}>{labelTitle}</ReaderOnlyLabel>
           <select
             ref={option}
-            name="filter"
-            id="filter"
-            onChange={() => {
-              getPokemons({
-                variables: { filterPokemonID: option.current.value },
-              });
-              setSpeciesFilterToggle(true);
-            }}
+            name={filterID}
+            id={filterID}
+            onChange={
+              getPokemons
+                ? () => {
+                    getPokemons({
+                      variables: { filterPokemonID: option.current.value },
+                    });
+                    setSpeciesFilterToggle(true);
+                  }
+                : handleSelection
+            }
           >
             <option value="" selected disabled hidden>
-              -- Select Specy --
+              -- {defaultSelectTitle} --
             </option>
-            {options?.map((item) => {
-              return (
-                <option value={`${item.id}`}>
-                  {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
-                </option>
-              );
-            })}
+            {options
+              ? options.map((item) => {
+                  return (
+                    <option key={item.id} value={`${item.id}`}>
+                      {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
+                    </option>
+                  );
+                })
+              : OPTIONS_MOCK_DATA.map((data, idx) => {
+                  return (
+                    <option key={idx} value={OPTIONS_VALUES[idx]}>
+                      {data}
+                    </option>
+                  );
+                })}
           </select>
         </FilterContainer>
       </FilterSortCard>
@@ -143,10 +180,15 @@ function SpeciesFilter({ options, getPokemons, setSpeciesFilterToggle }) {
   );
 }
 
-SpeciesFilter.propTypes = {
+Filter.propTypes = {
+  setFilter: PropTypes.func,
+  setOffset: PropTypes.func,
+  setSpeciesFilterToggle: PropTypes.func,
   options: PropTypes.array,
   getPokemons: PropTypes.func,
-  setSpeciesFilterToggle: PropTypes.func,
+  filterID: PropTypes.string,
+  labelTitle: PropTypes.string,
+  defaultSelectTitle: PropTypes.string,
 };
 
-export default SpeciesFilter;
+export default Filter;

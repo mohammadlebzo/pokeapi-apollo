@@ -66,6 +66,12 @@ const CardText = styled.p`
   font-size: 1.3rem;
 `;
 
+const CardTextAbilities = styled(CardText)`
+  margin-top: 0.188rem;
+  margin-bottom: 0.188rem;
+  text-transform: capitalize;
+`;
+
 const CardTextWrapper = styled.div`
   width: 50%;
   display: flex;
@@ -132,10 +138,14 @@ const Wrapper = styled.div`
   font-family: ${FONT.family.main};
 `;
 
+const WrapperForImageSection = styled(Wrapper)`
+  margin-top: 1.125rem;
+`;
+
 function CardDetails() {
   let pokeid = parseInt(useParams().pokeid) || 1;
 
-  const { loading, error, data } = useQuery(DETAILS_TRACK, {
+  const { error, data } = useQuery(DETAILS_TRACK, {
     variables: { pokeid },
   });
 
@@ -147,11 +157,11 @@ function CardDetails() {
         <Button to={"/"}>Back</Button>
       </ButtonsWrapper>
 
-      <Wrapper style={{ marginTop: "1.125rem" }}>
+      <WrapperForImageSection>
         <ImageWrapper>
           <img src={IMAGE.card} alt="Pokemon Logo" />
         </ImageWrapper>
-      </Wrapper>
+      </WrapperForImageSection>
 
       <Wrapper>
         <InfoWrapper>
@@ -190,15 +200,9 @@ function CardDetails() {
                     <InfoSectionWrapperClear
                       key={ability.pokemon_v2_ability.id}
                     >
-                      <CardText
-                        style={{
-                          marginTop: "0.188rem",
-                          marginBottom: "0.188rem",
-                          textTransform: "capitalize",
-                        }}
-                      >
+                      <CardTextAbilities>
                         {ability?.pokemon_v2_ability?.name}
-                      </CardText>
+                      </CardTextAbilities>
                     </InfoSectionWrapperClear>
                   );
                 })}

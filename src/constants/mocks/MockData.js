@@ -137,6 +137,7 @@ const DETAILS_MOCK_RESULT = {
 const NO_DATA_MOCK_RESULT = {
   data: {
     pokemon: [],
+    pokeNum: {aggregate: {count: 0}},
     species: [],
   },
 };

@@ -4,20 +4,27 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 import Tracks from "pages/Tracks";
 import CardDetails from "components/CardDetails";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  position: relative;
+  minheight: 100vh;
+`;
+const Space = styled.div`
+  height: 10rem;
+`;
 
 function App() {
   return (
-    <div style={{
-      position: "relative",
-      minHeight: "100vh",
-    }}>
+    <Wrapper>
       <Header />
       <Routes>
         <Route path="/" element={<Tracks />} />
         <Route path="details/:pokeid" element={<CardDetails />} />
       </Routes>
+      <Space />
       <Footer />
-    </div>
+    </Wrapper>
   );
 }
 
