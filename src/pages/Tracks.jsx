@@ -5,7 +5,7 @@ import SearchBar from "components/SearchBar";
 import Filter from "components/Filter";
 
 import { useState, useEffect } from "react";
-import { BACKGROUND, BORDER, FONT } from "constants/styles/StyleParams";
+import { BACKGROUND, BORDER, FONT, MEDIA } from "constants/styles/StyleParams";
 
 let DEFULT = new Array(20).fill(0);
 
@@ -112,6 +112,13 @@ const FiltersWrapper = styled.div`
   justify-content: space-between;
   margin-right: 18rem;
   margin-left: 18rem;
+
+  @media screen and (${MEDIA.mobile}) {
+    display: block;
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+  }
 `;
 
 const MainWrapper = styled.div`

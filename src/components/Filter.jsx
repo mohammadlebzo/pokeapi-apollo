@@ -90,6 +90,16 @@ const FilterContainer = styled.div`
 
 const MainFilterWrapper = styled.div`
   margin-top: 5rem;
+
+  @media screen and (${MEDIA.mobile}) {
+    margin-top: 2rem;
+    margin-right: 2rem;
+    margin-left: 2rem;
+
+    &:first-of-type {
+      margin-top: 5rem;
+    }
+  }
 `;
 
 const ReaderOnlyLabel = styled.label`
