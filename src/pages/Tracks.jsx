@@ -182,24 +182,24 @@ function Tracks() {
       />
       <FiltersWrapper>
         {page > 0 && (
-          <Filter
-            filterID={"filterSpecy"}
-            labelTitle={"Select Pokemon Specy"}
-            defaultSelectTitle={"Select Specy"}
-            options={data?.species}
-            getPokemons={getPokemons}
-            setSpeciesFilterToggle={setSpeciesFilterToggle}
-          />
-        )}
-        {page > 0 && (
-          <Filter
-            filterID={"sortBy"}
-            labelTitle={"Sort pokemons by"}
-            defaultSelectTitle={"Select Sort Option"}
-            setFilter={setFilter}
-            setOffset={setOffset}
-            setSpeciesFilterToggle={setSpeciesFilterToggle}
-          />
+          <>
+            <Filter
+              filterID={"filterSpecy"}
+              labelTitle={"Select Pokemon Specy"}
+              defaultSelectTitle={"Select Specy"}
+              options={data?.species}
+              getPokemons={getPokemons}
+              setSpeciesFilterToggle={setSpeciesFilterToggle}
+            />
+            <Filter
+              filterID={"sortBy"}
+              labelTitle={"Sort pokemons by"}
+              defaultSelectTitle={"Select Sort Option"}
+              setFilter={setFilter}
+              setOffset={setOffset}
+              setSpeciesFilterToggle={setSpeciesFilterToggle}
+            />
+          </>
         )}
       </FiltersWrapper>
 
