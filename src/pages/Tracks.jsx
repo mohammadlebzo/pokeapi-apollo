@@ -4,10 +4,23 @@ import styled from "styled-components";
 import SearchBar from "components/SearchBar";
 import Filter from "components/Filter";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { BACKGROUND, BORDER, FONT, MEDIA } from "constants/styles/StyleParams";
 
 let DEFULT = new Array(20).fill(0);
+
+const pokeInfoItems = `
+  id
+  name
+  weight
+  height
+  base_experience
+  abilities: pokemon_v2_pokemonabilities(limit: 2) {
+    pokemon_v2_ability {
+      name
+    }
+  }
+`;
 
 const DEFULT_TRACK = gql`
   query MyQuery(
@@ -21,23 +34,23 @@ const DEFULT_TRACK = gql`
       where: { name: $searchName }
       order_by: $filter
     ) {
-      id
-      name
-      height
-      weight
-      base_experience
-      abilities: pokemon_v2_pokemonabilities(limit: 2) {
-        pokemon_v2_ability {
-          id
-          name
-        }
-      }
+      ${pokeInfoItems}
     }
+  }
+`;
+
+const POKE_NUMBER_TRACK = gql`
+  query MyQuery {
     pokeNum: pokemon_v2_pokemon_aggregate {
       aggregate {
         count
       }
     }
+  }
+`;
+
+const SPECIES_TRACK = gql`
+  query MyQuery {
     species: pokemon_v2_pokemonspecies(limit: 5, offset: 5) {
       id
       name
@@ -51,16 +64,7 @@ const SELECTED_POKEMON_TRACK = gql`
       where: { id: { _eq: $filterPokemonID } }
     ) {
       pokemons: pokemon_v2_pokemons {
-        id
-        name
-        weight
-        height
-        base_experience
-        pokemon_v2_pokemonabilities(limit: 2) {
-          pokemon_v2_ability {
-            name
-          }
-        }
+        ${pokeInfoItems}
       }
     }
   }
@@ -160,17 +164,28 @@ function Tracks() {
     variables: { searchName, filter, offset },
   });
 
+  const { data: countData } = useQuery(POKE_NUMBER_TRACK);
+
+  const { data: species } = useQuery(SPECIES_TRACK);
+
   const [getPokemons, { data: filterData }] = useLazyQuery(
     SELECTED_POKEMON_TRACK
   );
 
-  let remaining = data?.pokeNum?.aggregate?.count;
+  let remaining = countData?.pokeNum?.aggregate?.count;
 
   useEffect(() => {
     refetch();
   }, [searchName, filter, page, refetch]);
 
-  if (error) return <p>{`Error! ${error.message}`}</p>;
+  if (error)
+    return (
+      <MainWrapper>
+        <CardsWrapper>
+          <NoDataMessege>No Data</NoDataMessege>
+        </CardsWrapper>
+      </MainWrapper>
+    );
 
   return (
     <>
@@ -187,7 +202,7 @@ function Tracks() {
               filterID={"filterSpecy"}
               labelTitle={"Select Pokemon Specy"}
               defaultSelectTitle={"Select Specy"}
-              options={data?.species}
+              options={species?.species}
               getPokemons={getPokemons}
               setSpeciesFilterToggle={setSpeciesFilterToggle}
             />
@@ -207,13 +222,25 @@ function Tracks() {
         <CardsWrapper>
           {!speciesFilterToggle
             ? data?.pokemon?.map((pokemon) => {
-                return <Card key={pokemon.id} pokemon={pokemon} />;
+                return (
+                  <Fragment key={pokemon.id}>
+                    <Card pokemon={pokemon} />
+                  </Fragment>
+                );
               }) ??
               DEFULT.map((defPokemon, idx) => {
-                return <Card key={idx} pokemon={{}} />;
+                return (
+                  <Fragment key={idx}>
+                    <Card pokemon={{}} />
+                  </Fragment>
+                );
               })
             : filterData?.species[0]?.pokemons?.map((pokemon) => {
-                return <Card key={pokemon.id} pokemon={pokemon} />;
+                return (
+                  <Fragment key={pokemon.id}>
+                    <Card pokemon={pokemon} />
+                  </Fragment>
+                );
               })}
 
           {data?.pokemon?.length === 0 && (
@@ -235,5 +262,5 @@ function Tracks() {
   );
 }
 
-export { DEFULT_TRACK, SELECTED_POKEMON_TRACK };
+export { DEFULT_TRACK, SELECTED_POKEMON_TRACK, SPECIES_TRACK };
 export default Tracks;

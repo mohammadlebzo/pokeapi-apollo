@@ -1,12 +1,17 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
-import { DEFULT_TRACK, SELECTED_POKEMON_TRACK } from "pages/Tracks";
+import {
+  DEFULT_TRACK,
+  SELECTED_POKEMON_TRACK,
+  SPECIES_TRACK,
+} from "pages/Tracks";
 import {
   DEFULT_TRACK_MOCK_RESULT,
   SEARCH_MOCK_RESULT,
   NO_DATA_MOCK_RESULT,
   SPECISES_FILTER_DATA_RESULT,
+  SPECIES_OPTIONS_RESULT,
 } from "constants/mocks/MockData";
 import Tracks from "pages/Tracks";
 import userEvent from "@testing-library/user-event";
@@ -63,6 +68,13 @@ const mocks = [
   },
   {
     request: {
+      query: SPECIES_TRACK,
+    },
+
+    result: SPECIES_OPTIONS_RESULT,
+  },
+  {
+    request: {
       query: SELECTED_POKEMON_TRACK,
 
       variables: {
@@ -102,9 +114,7 @@ describe("Tracks component", () => {
       </MemoryRouter>
     );
 
-    expect(
-      await screen.findByText("Error! An error occurred")
-    ).toBeInTheDocument();
+    expect(await screen.findByText("No Data")).toBeInTheDocument();
   });
 
   it("renders without error", async () => {

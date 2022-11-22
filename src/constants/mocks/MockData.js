@@ -53,11 +53,11 @@ const DEFULT_TRACK_MOCK_RESULT = {
         ],
       },
     ],
-    pokeNum: {
-      aggregate: {
-        count: 1154,
-      },
-    },
+  },
+};
+
+const SPECIES_OPTIONS_RESULT = {
+  data: {
     species: [
       {
         id: 16,
@@ -90,17 +90,6 @@ const SEARCH_MOCK_RESULT = {
             },
           },
         ],
-      },
-    ],
-    pokeNum: {
-      aggregate: {
-        count: 1154,
-      },
-    },
-    species: [
-      {
-        id: 16,
-        name: "pidgey",
       },
     ],
   },
@@ -137,7 +126,7 @@ const DETAILS_MOCK_RESULT = {
 const NO_DATA_MOCK_RESULT = {
   data: {
     pokemon: [],
-    pokeNum: {aggregate: {count: 0}},
+    pokeNum: { aggregate: { count: 0 } },
     species: [],
   },
 };
@@ -153,7 +142,7 @@ const SPECISES_FILTER_DATA_RESULT = {
             weight: 18,
             height: 3,
             base_experience: 50,
-            pokemon_v2_pokemonabilities: [
+            abilities: [
               {
                 pokemon_v2_ability: {
                   name: "keen-eye",
@@ -181,7 +170,7 @@ const SPECIES_DATA_STATE = {
       },
     ],
   },
-}
+};
 
 export {
   OPTIONS_MOCK_DATA,
@@ -190,5 +179,6 @@ export {
   DETAILS_MOCK_RESULT,
   NO_DATA_MOCK_RESULT,
   SPECISES_FILTER_DATA_RESULT,
-  SPECIES_DATA_STATE
+  SPECIES_DATA_STATE,
+  SPECIES_OPTIONS_RESULT,
 };

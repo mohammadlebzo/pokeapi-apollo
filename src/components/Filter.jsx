@@ -165,7 +165,7 @@ function Filter({
                 : handleSelection
             }
           >
-            <option value="" selected disabled hidden>
+            <option value="" hidden>
               -- {defaultSelectTitle} --
             </option>
             {options
