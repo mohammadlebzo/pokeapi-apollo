@@ -168,7 +168,6 @@ function Tracks() {
   });
 
   const {
-    error: countError,
     data: countData,
     refetch: countRefetch,
   } = useQuery(POKE_NUMBER_TRACK, { variables: { searchName } });
@@ -184,11 +183,7 @@ function Tracks() {
   useEffect(() => {
     refetch();
     countRefetch();
-  }, [searchName, filter, page, refetch]);
-
-  useEffect(() => {
-    countRefetch();
-  }, [filter, countRefetch]);
+  }, [searchName, filter, page, refetch, countRefetch]);
 
   if (error)
     return (
