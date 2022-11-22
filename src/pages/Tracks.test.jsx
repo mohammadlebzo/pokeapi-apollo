@@ -45,7 +45,7 @@ const mocks = [
       query: DEFULT_TRACK,
 
       variables: {
-        searchName: { _ilike: "bulbasaur" },
+        searchName: { _iregex: "^bulbasaur" },
         filter: {},
         offset: 0,
       },

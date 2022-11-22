@@ -75,23 +75,21 @@ const ReaderOnlyLabel = styled.label`
     width: 1px;
 `;
 
-function SearchBar({ setSearchName, setPage, setOffset }) {
-
+function SearchBar({ setSearchName, setPage, setOffset, remainingItems }) {
   const inputRef = useRef(null);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     if (inputRef.current.value) {
-      setSearchName({ _ilike: inputRef.current.value });
-      setPage(0);
+      setSearchName({ _iregex: `^${inputRef.current.value}` });
+      remainingItems > 20 ? setPage(1) : setPage(0);
       setOffset(0);
     } else {
       setSearchName({});
       setPage(1);
     }
   };
-
 
   return (
     <Wrapper>
@@ -127,6 +125,7 @@ SearchBar.propTypes = {
   setSearchName: PropTypes.func,
   setPage: PropTypes.func,
   setOffset: PropTypes.func,
+  remainingItems: PropTypes.number,
 };
 
 export default SearchBar;

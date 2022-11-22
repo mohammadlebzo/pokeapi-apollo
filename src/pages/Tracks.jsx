@@ -41,8 +41,8 @@ const DEFULT_TRACK = gql`
 `;
 
 const POKE_NUMBER_TRACK = gql`
-  query MyQuery {
-    pokeNum: pokemon_v2_pokemon_aggregate {
+  query MyQuery($searchName: String_comparison_exp!) {
+    pokeNum: pokemon_v2_pokemon_aggregate(where: { name: $searchName }) {
       aggregate {
         count
       }
@@ -167,7 +167,11 @@ function Tracks() {
     variables: { searchName, filter, offset },
   });
 
-  const { data: countData } = useQuery(POKE_NUMBER_TRACK);
+  const {
+    error: countError,
+    data: countData,
+    refetch: countRefetch,
+  } = useQuery(POKE_NUMBER_TRACK, { variables: { searchName } });
 
   const { data: species } = useQuery(SPECIES_TRACK);
 
@@ -179,7 +183,16 @@ function Tracks() {
 
   useEffect(() => {
     refetch();
+    countRefetch();
   }, [searchName, filter, page, refetch]);
+
+  useEffect(() => {
+    countRefetch();
+  }, [filter, countRefetch]);
+
+  if (countError) {
+    console.log(countError);
+  }
 
   if (error)
     return (
@@ -197,6 +210,7 @@ function Tracks() {
         setPage={setPage}
         setOffset={setOffset}
         offset={offset}
+        remainingItems={remaining}
       />
       <FiltersWrapper>
         {page > 0 && (
