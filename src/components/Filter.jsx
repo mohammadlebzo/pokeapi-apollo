@@ -138,8 +138,8 @@ function Filter({
   const handleSelection = (e) => {
     e.preventDefault();
 
-    let content = e.target.value.split(".");
-    let contentToObject = JSON.parse(`{"${content[0]}": "${content[1]}"}`);
+    const content = e.target.value.split(".");
+    const contentToObject = JSON.parse(`{"${content[0]}": "${content[1]}"}`);
     setFilter(contentToObject);
     setOffset(0);
     setSpeciesFilterToggle(false);

@@ -7,8 +7,9 @@ import Filter from "components/Filter";
 import { useState, useEffect, Fragment } from "react";
 import { BACKGROUND, BORDER, FONT, MEDIA } from "constants/styles/StyleParams";
 
-let DEFULT = new Array(20).fill(0);
+const DEFULT = new Array(20).fill(0);
 
+// Tracks
 const pokeInfoItems = `
   id
   name
@@ -70,6 +71,7 @@ const SELECTED_POKEMON_TRACK = gql`
   }
 `;
 
+// Styled Components
 const Button = styled.button`
   &:first-of-type {
     margin: 0;
@@ -138,6 +140,7 @@ const NoDataMessege = styled.p`
   margin-top: 10rem;
 `;
 
+// Component
 function Tracks() {
   const [searchName, setSearchName] = useState({});
   const [filter, setFilter] = useState({});
@@ -172,7 +175,7 @@ function Tracks() {
     SELECTED_POKEMON_TRACK
   );
 
-  let remaining = countData?.pokeNum?.aggregate?.count;
+  const remaining = countData?.pokeNum?.aggregate?.count;
 
   useEffect(() => {
     refetch();

@@ -143,7 +143,7 @@ const WrapperForImageSection = styled(Wrapper)`
 `;
 
 function CardDetails() {
-  let pokeid = parseInt(useParams().pokeid) || 1;
+  const pokeid = parseInt(useParams().pokeid) || 1;
 
   const { error, data } = useQuery(DETAILS_TRACK, {
     variables: { pokeid },
