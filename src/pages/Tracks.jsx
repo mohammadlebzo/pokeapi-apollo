@@ -190,10 +190,6 @@ function Tracks() {
     countRefetch();
   }, [filter, countRefetch]);
 
-  if (countError) {
-    console.log(countError);
-  }
-
   if (error)
     return (
       <MainWrapper>
